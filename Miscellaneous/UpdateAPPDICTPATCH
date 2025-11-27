@@ -1,0 +1,27 @@
+--SQL SCRIPT RAN IN LAS VIRGENES TO UPDATE METER CUSTOM 1 TO ALLOW NULL VALUES DUE TO THE METER EXCHANGE INTERFACE THROWING ERRORS FOR THE FIELD BEING NULL
+
+SELECT *
+INTO DBO.BIF005BK_093020
+FROM ADVANCED.BIF005 --53303 rows
+
+
+SELECT *
+INTO DBO.SYS001BK_093020
+FROM ADVANCED.SYS001
+
+SELECT *
+FROM ADVANCED.BIF005 -- 53303 rows
+
+ALTER TABLE ADVANCED.BIF005
+ALTER COLUMN C_METERCUSTOM1 VARCHAR(15) NULL --This piece was not needed
+
+select * from ADVANCED.SYS001
+
+UPDATE ADVANCED.SYS001 SET C_APPDICTPATCH='
+
+<ApplicationDictionary>
+      <Table Name="BIF963"><Field Name="C_REFNUMBER" Length="100"/></Table>
+      <Table Name="BIF005">
+         <Field Name="C_METERCUSTOM1" CodeName="Custom1" Caption="Custom Field 1:" SecurityId="18478814" Type="Char" Length="15" Decimals="0" Nullable="true" Comment="The meter customer field 1 information." Reportable="true" Filterable="true" Auditable="true" Importable="true" Exportable="true" Multivalue="false" Maintain="false" KeyType="" Counter="" DisplayOrder="" />
+      </Table>
+</ApplicationDictionary>'
